@@ -16,6 +16,7 @@ export default function Nav() {
           <NavLink href="/squads">Squads</NavLink>
           <NavLink href="/freelances">Freelances</NavLink>
           <NavLink href="/pricing">Tarifs</NavLink>
+          <NavLink href="/blog">Blog</NavLink>
           <NavLink href="/a-propos">À propos</NavLink>
         </nav>
         <div className="nav__cta">

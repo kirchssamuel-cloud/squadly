@@ -27,10 +27,10 @@ export default function Footer() {
           <div>
             <p className="footer__col-title">Ressources</p>
             <ul className="footer__col-links">
+              <li><Link href="/blog">Blog</Link></li>
               <li><Link href="/comment-ca-marche#methodologie">Méthodologie Output Score</Link></li>
-              <li><Link href="/contact">Guide du brief</Link></li>
-              <li><Link href="/contact">Changelog</Link></li>
-              <li><Link href="/contact">Newsletter</Link></li>
+              <li><Link href="/blog/comment-rediger-brief-freelance-projet-reussi">Guide du brief</Link></li>
+              <li><Link href="/blog/malt-vs-squadly-comparatif-2026">Malt vs Squadly</Link></li>
             </ul>
           </div>
           <div>

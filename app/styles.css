@@ -2,8 +2,130 @@
    This file is reserved for Next.js-only overrides (e.g. layout fixes,
    class hooks added by interactive components). */
 
-/* Ensure Next.js root containers don't add unwanted spacing. */
 body > #__next,
 body > [data-nextjs-scroll-focus-boundary] {
   min-height: 100%;
+}
+
+/* Skip-to-content link (a11y) */
+.sq-skip-link {
+  position: absolute;
+  top: -40px;
+  left: var(--space-4);
+  background: var(--color-ink-1000);
+  color: var(--color-ink-50);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  z-index: 1000;
+  transition: top var(--dur-fast) var(--ease-out);
+}
+.sq-skip-link:focus {
+  top: var(--space-3);
+  outline: 2px solid var(--color-accent);
+}
+
+/* Blog content — typography rules for rendered markdown */
+.blog__content {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+.blog__content h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.025em;
+  margin: var(--space-12) 0 var(--space-4);
+}
+.blog__content h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  margin: var(--space-8) 0 var(--space-3);
+}
+.blog__content p {
+  margin: 0 0 var(--space-4);
+  color: var(--text-secondary);
+}
+.blog__content ul,
+.blog__content ol {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-6);
+  color: var(--text-secondary);
+}
+.blog__content li {
+  margin-bottom: var(--space-2);
+}
+.blog__content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.blog__content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.blog__content blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding: var(--space-2) 0 var(--space-2) var(--space-5);
+  margin: var(--space-5) 0;
+  font-style: italic;
+  color: var(--text-primary);
+}
+.blog__content code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--color-ink-100);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+[data-theme='dark'] .blog__content code {
+  background: var(--color-ink-900);
+}
+.blog__code {
+  background: var(--color-ink-1000);
+  color: var(--color-ink-50);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  margin: var(--space-5) 0;
+  font-size: 14px;
+}
+.blog__code code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+.blog__table-wrap {
+  overflow-x: auto;
+  margin: var(--space-6) 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+.blog__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.blog__table th,
+.blog__table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.blog__table thead th {
+  background: var(--color-ink-50);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+[data-theme='dark'] .blog__table thead th {
+  background: var(--color-ink-900);
+}
+.blog__table tr:last-child td {
+  border-bottom: 0;
 }
