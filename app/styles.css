@@ -1,0 +1,9 @@
+/* Squadly globals — the design system lives in /public/styles/ for now.
+   This file is reserved for Next.js-only overrides (e.g. layout fixes,
+   class hooks added by interactive components). */
+
+/* Ensure Next.js root containers don't add unwanted spacing. */
+body > #__next,
+body > [data-nextjs-scroll-focus-boundary] {
+  min-height: 100%;
+}
