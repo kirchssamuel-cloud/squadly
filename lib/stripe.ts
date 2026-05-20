@@ -7,10 +7,7 @@ export function getStripe() {
     throw new Error('STRIPE_SECRET_KEY is missing — set it in .env.local');
   }
   if (!cached) {
-    cached = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2024-12-18.acacia',
-      typescript: true
-    });
+    cached = new Stripe(process.env.STRIPE_SECRET_KEY, { typescript: true });
   }
   return cached;
 }
