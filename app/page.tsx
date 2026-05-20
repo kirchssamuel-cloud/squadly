@@ -1,14 +1,21 @@
 import Link from 'next/link';
+import AnimatedCounter from './components/AnimatedCounter';
+import RevealOnScroll from './components/RevealOnScroll';
+import LiveBriefDemo from './components/LiveBriefDemo';
 
 export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="hero">
+      <section className="hero hero--gradient">
+        <div className="hero__grid-bg" aria-hidden="true" />
         <div className="sq-container">
           <div className="hero__grid">
             <div>
-              <span className="sq-eyebrow hero__eyebrow">Marketplace de squads · 2026</span>
+              <span className="sq-eyebrow hero__eyebrow">
+                <span className="hero__live-dot" aria-hidden="true" />
+                Marketplace de squads · 2026
+              </span>
               <h1 className="hero__title sq-enter">
                 Vous achetez un livrable,<br />
                 pas un <em>CV</em>.
@@ -27,94 +34,64 @@ export default function HomePage() {
                   <span className="sq-btn__chevron" aria-hidden="true">→</span>
                 </Link>
               </div>
+              <div className="hero__trust sq-enter sq-enter--d3">
+                <span className="hero__trust-dot" aria-hidden="true" />
+                <strong>485</strong> freelances actifs · <strong>1 230</strong> squads livrées · <strong>9,1/10</strong> Output Score
+              </div>
             </div>
 
-            {/* AI BRIEF BUILDER — mockup */}
-            <div className="brief-demo sq-enter sq-enter--d3" aria-hidden="true">
-              <div className="brief-demo__chrome">
-                <span className="brief-demo__dot"></span>
-                <span className="brief-demo__dot"></span>
-                <span className="brief-demo__dot"></span>
-                <span className="brief-demo__url">app.squadly.fr / brief / nouveau</span>
-              </div>
-              <div className="brief-demo__body">
-                <div className="brief-step brief-step--done">
-                  <div className="brief-step__num">✓</div>
-                  <div>
-                    <div className="brief-step__label">Type de projet</div>
-                    <div className="brief-step__value">MVP mobile B2C, fintech assurance</div>
-                  </div>
-                </div>
-                <div className="brief-step brief-step--done">
-                  <div className="brief-step__num">✓</div>
-                  <div>
-                    <div className="brief-step__label">Budget &amp; délai</div>
-                    <div className="brief-step__value">35 000 € · livraison 10 semaines</div>
-                  </div>
-                </div>
-                <div className="brief-step brief-step--active">
-                  <div className="brief-step__num">3</div>
-                  <div>
-                    <div className="brief-step__label">Compétences détectées</div>
-                    <div className="brief-step__value">L&apos;IA a identifié 4 profils nécessaires.</div>
-                    <div className="brief-step__chips">
-                      <span className="brief-chip brief-chip--accent">Product Designer</span>
-                      <span className="brief-chip brief-chip--accent">Dev React Native</span>
-                      <span className="brief-chip brief-chip--accent">Backend Node</span>
-                      <span className="brief-chip brief-chip--accent">PM Fintech</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="brief-step">
-                  <div className="brief-step__num">4</div>
-                  <div>
-                    <div className="brief-step__label">Validation finale</div>
-                    <div className="brief-step__value sq-text-subtle">À venir</div>
-                  </div>
-                </div>
-              </div>
-              <div className="brief-demo__input">
-                <div className="brief-demo__field">
-                  <span>Préciser&nbsp;: « intégration Stripe Connect indispensable »</span>
-                  <span className="brief-demo__caret"></span>
-                </div>
-                <button className="sq-btn sq-btn--primary sq-btn--sm" type="button">Continuer</button>
-              </div>
-            </div>
+            <LiveBriefDemo />
           </div>
         </div>
       </section>
 
-      {/* METRIC STRIP */}
+      {/* METRIC STRIP — animated */}
       <section className="metric-strip">
         <div className="sq-container">
           <div className="metric-strip__grid">
             <div className="metric-strip__item">
-              <div className="sq-stat__value">48<span style={{ fontSize: '0.55em', letterSpacing: '-0.02em', color: 'var(--text-tertiary)' }}>h</span></div>
+              <div className="sq-stat__value">
+                <AnimatedCounter to={48} />
+                <span style={{ fontSize: '0.55em', letterSpacing: '-0.02em', color: 'var(--text-tertiary)' }}>h</span>
+              </div>
               <div className="sq-stat__label">Délai moyen pour composer et valider une squad</div>
             </div>
             <div className="metric-strip__item">
-              <div className="sq-stat__value">89<span style={{ fontSize: '0.55em', letterSpacing: '-0.02em', color: 'var(--text-tertiary)' }}>%</span></div>
+              <div className="sq-stat__value">
+                <AnimatedCounter to={89} />
+                <span style={{ fontSize: '0.55em', letterSpacing: '-0.02em', color: 'var(--text-tertiary)' }}>%</span>
+              </div>
               <div className="sq-stat__label">Projets livrés sous contrainte de délai initial</div>
             </div>
             <div className="metric-strip__item">
-              <div className="sq-stat__value">2,3<span style={{ fontSize: '0.55em', letterSpacing: '-0.02em', color: 'var(--text-tertiary)' }}> M€</span></div>
+              <div className="sq-stat__value">
+                <AnimatedCounter to={2.3} decimals={1} />
+                <span style={{ fontSize: '0.55em', letterSpacing: '-0.02em', color: 'var(--text-tertiary)' }}> M€</span>
+              </div>
               <div className="sq-stat__label">Reversés aux freelances sur le dernier trimestre</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* LOGOS */}
+      {/* LOGOS — marquee infini */}
       <section>
-        <div className="sq-container logo-row">
-          <p className="logo-row__caption">Ils ont monté leur squad avec Squadly</p>
-          <span className="logo-row__item">Allianz·X</span>
-          <span className="logo-row__item">Doctolib</span>
-          <span className="logo-row__item">Qonto</span>
-          <span className="logo-row__item">Alan</span>
-          <span className="logo-row__item">Spendesk</span>
-          <span className="logo-row__item">Mirakl</span>
+        <div className="sq-container">
+          <p className="logo-row__caption" style={{ textAlign: 'center', marginBottom: 'var(--space-4)' }}>
+            Ils ont monté leur squad avec Squadly
+          </p>
+          <div className="logo-row logo-row--marquee" role="list" aria-label="Logos clients">
+            <div className="logo-row__track">
+              {[
+                'Allianz·X', 'Doctolib', 'Qonto', 'Alan', 'Spendesk', 'Mirakl',
+                'PayFit', 'Pennylane', 'Lemlist', 'Sunday', 'Welcome to the Jungle',
+                'Allianz·X', 'Doctolib', 'Qonto', 'Alan', 'Spendesk', 'Mirakl',
+                'PayFit', 'Pennylane', 'Lemlist', 'Sunday', 'Welcome to the Jungle'
+              ].map((logo, i) => (
+                <span className="logo-row__item" key={`${logo}-${i}`} role="listitem">{logo}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

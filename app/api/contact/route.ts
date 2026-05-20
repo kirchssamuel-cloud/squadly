@@ -5,6 +5,8 @@ import { getSupabaseServiceClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
+const FALLBACK_EMAIL = process.env.FALLBACK_CONTACT_EMAIL ?? 'kirchs.samuel@gmail.com';
+
 const ContactSchema = z.object({
   type: z.string().min(1).max(50),
   budget: z.string().min(1).max(50),
@@ -51,7 +53,24 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 2. Notify the Squadly team via Resend if configured.
+  const subject = `[Brief Squadly] ${data.nom} · ${data.type} · ${data.budget}`;
+  const body = [
+    `Nouveau brief reçu via squadly-app.netlify.app`,
+    ``,
+    `Nom         : ${data.nom}`,
+    `Email       : ${data.email}`,
+    `Entreprise  : ${data.entreprise || '—'}`,
+    `Type        : ${data.type}`,
+    `Budget      : ${data.budget}`,
+    `Délai       : ${data.delai || '—'}`,
+    ``,
+    `--- Brief ---`,
+    data.brief
+  ].join('\n');
+
+  let emailSent = false;
+
+  // 2a. Resend (préféré si clé configurée + domaine vérifié)
   if (process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL && process.env.RESEND_TEAM_EMAIL) {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
@@ -59,25 +78,45 @@ export async function POST(req: NextRequest) {
         from: process.env.RESEND_FROM_EMAIL,
         to: process.env.RESEND_TEAM_EMAIL.split(',').map((s) => s.trim()),
         replyTo: data.email,
-        subject: `[Brief Squadly] ${data.nom} · ${data.type} · ${data.budget}`,
-        text: [
-          `Nouveau brief reçu`,
-          ``,
-          `Nom : ${data.nom}`,
-          `Email : ${data.email}`,
-          `Entreprise : ${data.entreprise || '—'}`,
-          `Type : ${data.type}`,
-          `Budget : ${data.budget}`,
-          `Délai : ${data.delai || '—'}`,
-          ``,
-          `--- Brief ---`,
-          data.brief
-        ].join('\n')
+        subject,
+        text: body
       });
+      emailSent = true;
     } catch (err) {
       console.error('[contact] resend error', err);
     }
   }
 
-  return NextResponse.json({ ok: true });
+  // 2b. Fallback FormSubmit (gratuit, zéro config DNS) si Resend n'a pas marché.
+  // FormSubmit envoie un email de confirmation au premier message pour activer la boîte.
+  if (!emailSent) {
+    try {
+      const fsResp = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(FALLBACK_EMAIL)}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: subject,
+          _captcha: 'false',
+          _template: 'box',
+          _replyto: data.email,
+          nom: data.nom,
+          email: data.email,
+          entreprise: data.entreprise || '—',
+          type: data.type,
+          budget: data.budget,
+          delai: data.delai || '—',
+          brief: data.brief
+        })
+      });
+      if (!fsResp.ok) {
+        console.error('[contact] formsubmit non-2xx', fsResp.status);
+      } else {
+        emailSent = true;
+      }
+    } catch (err) {
+      console.error('[contact] formsubmit error', err);
+    }
+  }
+
+  return NextResponse.json({ ok: true, emailSent });
 }

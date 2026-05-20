@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
+import AnnouncementBar from './components/AnnouncementBar';
 import './styles.css';
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://squadly-app.netlify.app';
@@ -115,6 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
         />
+        <AnnouncementBar />
         <Nav />
         <main id="main">{children}</main>
         <Footer />

@@ -61,8 +61,9 @@ export default function ContactForm() {
 
   if (status === 'ok') {
     return (
-      <div className="contact-form" style={{ padding: 'var(--space-10)', textAlign: 'center' }}>
-        <span className="sq-eyebrow">Brief envoyé</span>
+      <div className="contact-form contact-form--success">
+        <div className="contact-form__success-icon" aria-hidden="true">✓</div>
+        <span className="sq-eyebrow">Brief reçu</span>
         <h2 style={{
           fontFamily: 'var(--font-display)',
           fontWeight: 500,
@@ -70,12 +71,21 @@ export default function ContactForm() {
           letterSpacing: '-0.025em',
           margin: 'var(--space-4) 0'
         }}>
-          Merci. Réponse sous 24 h ouvrées.
+          Bien noté. On revient sous 24 h ouvrées.
         </h2>
-        <p className="sq-text-muted">
-          Charlotte Faivre vous écrit personnellement avec 2–3 questions de cadrage.
-          En attendant, jetez un œil aux squads livrées récemment.
+        <p className="sq-text-muted" style={{ marginBottom: 'var(--space-6)' }}>
+          Votre brief est arrivé chez nous. Charlotte Faivre vous écrit personnellement
+          à <strong style={{ color: 'var(--text-primary)' }}>l&apos;adresse que vous avez indiquée</strong>
+          {' '}avec 2–3 questions de cadrage. Si rien n&apos;arrive sous 24 h, vérifiez vos spams
+          ou écrivez directement à charlotte@squadly.fr.
         </p>
+        <div className="contact-form__success-next">
+          <span className="sq-caption">En attendant</span>
+          <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-3)', flexWrap: 'wrap' }}>
+            <a className="sq-btn sq-btn--secondary sq-btn--sm" href="/squads">Voir les squads livrées</a>
+            <a className="sq-btn sq-btn--ghost sq-btn--sm" href="/blog">Lire les articles</a>
+          </div>
+        </div>
       </div>
     );
   }
